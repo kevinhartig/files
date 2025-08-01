@@ -1,5 +1,5 @@
 {
-  "dappId": "eef7c5a4-9131-5e5c-8c29-9e175514785d",
+  "dappId": "00b6c8a0-a9b3-5208-8d87-47ead8652e44",
   "version": "1.0.0",
   "manifestUrl": "/dapps/bundled-files/manifest.json",
   "entryPoint": "dist/index.bundle.js",
@@ -9,7 +9,10 @@
     "css": [
       "dist/index.css"
     ],
-    "scripts": []
+    "scripts": [
+      "https://unpkg.com/react@18/umd/react.production.min.js",
+      "https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+    ]
   },
   "permissions": [
     "profile:read"

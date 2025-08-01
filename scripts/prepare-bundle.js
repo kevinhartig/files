@@ -96,12 +96,97 @@ function prepareJSBundle() {
   
   // Ensure the global FilesApp object is properly exposed
   const exposureCode = `
-// Ensure global exposure
+// Simple direct export of the init function
+// This ensures the init function is always available globally
 if (typeof window !== 'undefined') {
+  // Create FilesApp object if it doesn't exist
   window.FilesApp = window.FilesApp || {};
-  // Make sure the init function is properly exposed
-  if (!window.FilesApp.init && typeof __NEXT_DATA__ !== 'undefined') {
-    console.log('Initializing FilesApp global object');
+  
+  // Define a simple init function that directly renders the app
+  if (!window.FilesApp.init) {
+    window.FilesApp.init = function(container, securityInterface) {
+      // Create a root element
+      const root = document.createElement('div');
+      container.appendChild(root);
+      
+      // Use global React and ReactDOM objects
+      // Check if React and ReactDOM are available in the global scope
+      if (!window.React || !window.ReactDOM) {
+        console.error('React and/or ReactDOM not found in global scope');
+        const errorDiv = document.createElement('div');
+        errorDiv.innerHTML = '<h2 style="color: red;">Error initializing DApp</h2><p>React and/or ReactDOM not found. Make sure they are loaded before the DApp.</p>';
+        container.appendChild(errorDiv);
+        return;
+      }
+      
+      const React = window.React;
+      const ReactDOM = window.ReactDOM;
+      
+      // Create a simple app component
+      function App() {
+        return React.createElement('div', null, [
+          React.createElement('h1', null, 'Files App'),
+          React.createElement('p', null, 'A simple Next.js React app with Turbopack'),
+          securityInterface && React.createElement('div', null, [
+            React.createElement('h2', null, 'Security Interface Connected'),
+            React.createElement('button', {
+              onClick: async () => {
+                try {
+                  const did = await securityInterface.getProfileDid();
+                  alert('Profile DID: ' + did);
+                } catch (error) {
+                  console.error('Error accessing profile DID:', error);
+                  alert('Error accessing profile DID. See console for details.');
+                }
+              }
+            }, 'Get Profile DID')
+          ])
+        ]);
+      }
+      
+      // Render the app - handle both React 18+ (createRoot) and older versions
+      let cleanup;
+      
+      try {
+        // Check if we're using React 18+ with createRoot API
+        if (typeof ReactDOM.createRoot === 'function') {
+          // React 18+ approach
+          const reactRoot = ReactDOM.createRoot(root);
+          reactRoot.render(React.createElement(React.StrictMode, null, React.createElement(App)));
+          
+          cleanup = () => {
+            reactRoot.unmount();
+            container.removeChild(root);
+          };
+        } else if (typeof ReactDOM.render === 'function') {
+          // Legacy React approach (React 17 and earlier)
+          ReactDOM.render(
+            React.createElement(React.StrictMode, null, React.createElement(App)),
+            root
+          );
+          
+          cleanup = () => {
+            if (typeof ReactDOM.unmountComponentAtNode === 'function') {
+              ReactDOM.unmountComponentAtNode(root);
+            }
+            container.removeChild(root);
+          };
+        } else {
+          throw new Error('ReactDOM.render or ReactDOM.createRoot not found');
+        }
+      } catch (error) {
+        console.error('Error rendering React component:', error);
+        const errorDiv = document.createElement('div');
+        errorDiv.innerHTML = '<h2 style="color: red;">Error initializing DApp</h2><p>Failed to render React component: ' + error.message + '</p>';
+        container.appendChild(errorDiv);
+        return () => {
+          container.removeChild(root);
+        };
+      }
+      
+      // Return cleanup function
+      return cleanup;
+    };
   }
 }
 `;

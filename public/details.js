@@ -81,7 +81,7 @@ export function showDetails() {
 
     // Create content
     const title = document.createElement('h1');
-    title.textContent = 'Encrypted Files 🔐';
+    title.textContent = 'Signet Bundled DApp 🚀';
     title.style.cssText = `
         font-size: clamp(1.75rem, 4vw, 2.5rem);
         margin: 0 0 0.75rem 0;
@@ -90,7 +90,7 @@ export function showDetails() {
     `;
 
     const subtitle = document.createElement('p');
-    subtitle.textContent = 'Secure Decentralized Data Storage';
+    subtitle.textContent = 'Reference Implementation for React Applications';
     subtitle.style.cssText = `
         font-size: clamp(1rem, 3vw, 1.25rem);
         margin: 0 0 1rem 0;
@@ -98,7 +98,7 @@ export function showDetails() {
     `;
 
     const description = document.createElement('p');
-    description.textContent = 'This DApp provides secure, encrypted storage for your files using decentralized technology. Your data is encrypted before being distributed across the network, ensuring maximum privacy and security.';
+    description.textContent = 'This project demonstrates how to build a Next.js React application that works as a bundled DApp for Signet. It provides a complete reference implementation with all the necessary configurations and integrations.';
     description.style.cssText = `
         font-size: clamp(0.875rem, 2.5vw, 1rem);
         margin: 0 0 1.5rem 0;
@@ -119,49 +119,71 @@ export function showDetails() {
         <h3 style="margin: 0 0 1rem 0; color: #1f2937; font-size: clamp(1rem, 2.5vw, 1.1rem); font-weight: 600; text-align: center;">Key Features:</h3>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.75rem; font-size: clamp(0.75rem, 2vw, 0.875rem); color: #4b5563;">
             <div style="display: flex; align-items: center;">
-                <span style="margin-right: 0.5rem; font-size: 1rem;">🔒</span>
-                <span>End-to-end encryption</span>
-            </div>
-            <div style="display: flex; align-items: center;">
-                <span style="margin-right: 0.5rem; font-size: 1rem;">🌐</span>
-                <span>Decentralized storage</span>
-            </div>
-            <div style="display: flex; align-items: center;">
-                <span style="margin-right: 0.5rem; font-size: 1rem;">🗝️</span>
-                <span>Private key control</span>
-            </div>
-            <div style="display: flex; align-items: center;">
-                <span style="margin-right: 0.5rem; font-size: 1rem;">📱</span>
-                <span>Cross-platform access</span>
+                <span style="margin-right: 0.5rem; font-size: 1rem;">🔌</span>
+                <span>Signet Integration</span>
             </div>
             <div style="display: flex; align-items: center;">
                 <span style="margin-right: 0.5rem; font-size: 1rem;">⚡</span>
-                <span>Fast file retrieval</span>
+                <span>Turbopack Bundling</span>
             </div>
             <div style="display: flex; align-items: center;">
-                <span style="margin-right: 0.5rem; font-size: 1rem;">🔄</span>
-                <span>Managed data sharing</span>
+                <span style="margin-right: 0.5rem; font-size: 1rem;">📄</span>
+                <span>Manifest Configuration</span>
+            </div>
+            <div style="display: flex; align-items: center;">
+                <span style="margin-right: 0.5rem; font-size: 1rem;">🔒</span>
+                <span>Security Interface</span>
+            </div>
+            <div style="display: flex; align-items: center;">
+                <span style="margin-right: 0.5rem; font-size: 1rem;">⚙️</span>
+                <span>Init Function</span>
+            </div>
+            <div style="display: flex; align-items: center;">
+                <span style="margin-right: 0.5rem; font-size: 1rem;">🧩</span>
+                <span>Global Export</span>
             </div>
         </div>
     `;
 
-    const statusContainer = document.createElement('div');
-    statusContainer.style.cssText = `
-        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    const technicalContainer = document.createElement('div');
+    technicalContainer.style.cssText = `
+        background: linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 100%);
         border-radius: 8px;
         padding: 1rem;
         margin-bottom: 1.5rem;
-        border-left: 4px solid #f59e0b;
+        border-left: 4px solid #3b82f6;
+        text-align: left;
     `;
 
-    statusContainer.innerHTML = `
-        <div style="display: flex; align-items: center; color: #92400e;">
-            <span style="margin-right: 0.5rem; font-size: 1.2rem;">⚠️</span>
-            <span style="font-weight: 600; font-size: clamp(0.8rem, 2vw, 0.9rem);">Development Status: Coming Soon</span>
-        </div>
-        <p style="margin: 0.5rem 0 0 1.7rem; font-size: clamp(0.75rem, 2vw, 0.875rem); color: #92400e; line-height: 1.4;">
-            This DApp is currently under development. Full encryption and decentralized storage functionality will be available in future releases.
-        </p>
+    technicalContainer.innerHTML = `
+        <h3 style="margin: 0 0 0.75rem 0; color: #1e40af; font-size: clamp(0.9rem, 2.5vw, 1rem); font-weight: 600;">Technical Implementation:</h3>
+        <ul style="margin: 0; padding-left: 1.5rem; font-size: clamp(0.75rem, 2vw, 0.875rem); color: #1e3a8a; line-height: 1.6;">
+            <li>Next.js with Turbopack for fast builds and bundling</li>
+            <li>TypeScript for type safety and better developer experience</li>
+            <li>Custom bundle preparation script for Signet compatibility</li>
+            <li>React 19 with modern component patterns</li>
+            <li>Properly configured manifest.json for Signet integration</li>
+        </ul>
+    `;
+
+    const workflowContainer = document.createElement('div');
+    workflowContainer.style.cssText = `
+        background: #f8fafc;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid #e2e8f0;
+    `;
+
+    workflowContainer.innerHTML = `
+        <h3 style="margin: 0 0 0.75rem 0; color: #1f2937; font-size: clamp(0.9rem, 2.5vw, 1rem); font-weight: 600; text-align: center;">How It Works:</h3>
+        <ol style="margin: 0; padding-left: 1.5rem; font-size: clamp(0.75rem, 2vw, 0.875rem); color: #4b5563; line-height: 1.6; text-align: left;">
+            <li>Signet loads the DApp using the manifest.json configuration</li>
+            <li>CSS and JavaScript bundles are loaded in the correct order</li>
+            <li>The global FilesApp object is accessed to get the init function</li>
+            <li>The init function is called with a container and security interface</li>
+            <li>React renders the application in the provided container</li>
+        </ol>
     `;
 
     const buttonContainer = document.createElement('div');
@@ -174,9 +196,9 @@ export function showDetails() {
         padding-bottom: 1rem;
     `;
 
-    const learnMoreButton = document.createElement('button');
-    learnMoreButton.textContent = 'Learn More 📚';
-    learnMoreButton.style.cssText = `
+    const docsButton = document.createElement('button');
+    docsButton.textContent = 'View Documentation 📚';
+    docsButton.style.cssText = `
         background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
         color: white;
         border: none;
@@ -190,10 +212,10 @@ export function showDetails() {
         min-height: 44px;
     `;
 
-    const notifyButton = document.createElement('button');
-    notifyButton.textContent = 'Notify Me 🔔';
-    notifyButton.style.cssText = `
-        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    const githubButton = document.createElement('button');
+    githubButton.textContent = 'View Source Code 💻';
+    githubButton.style.cssText = `
+        background: linear-gradient(135deg, #4b5563 0%, #1f2937 100%);
         color: white;
         border: none;
         padding: 0.875rem 1.5rem;
@@ -221,15 +243,15 @@ export function showDetails() {
         }
     };
 
-    addHoverEffects(learnMoreButton);
-    addHoverEffects(notifyButton);
+    addHoverEffects(docsButton);
+    addHoverEffects(githubButton);
 
-    learnMoreButton.addEventListener('click', () => {
-        alert('🔐 Encrypted Files DApp will provide:\n\n• Data streamed encryption using AES-256\n• IPFS distributed storage\n• Managed file sharing\n• Secure data access from everywhere\n\nStay tuned for updates!');
+    docsButton.addEventListener('click', () => {
+        alert('📚 Documentation Resources:\n\n• BUNDLED_DAPP_GUIDE.md - How to build and configure the DApp\n• docs/Bundled DApp Support.md - Learn about bundled DApp support\n• docs/Signet DApp Security Interface.md - Security interface details\n\nCheck the project repository for these files.');
     });
 
-    notifyButton.addEventListener('click', () => {
-        alert('🔔 Great! You\'ll be notified when the Encrypted Files DApp launches.\n\nExpected features:\n• Secure file upload/download\n• Folder organization\n• Managed data sharing\n• Access control management');
+    githubButton.addEventListener('click', () => {
+        alert('💻 Source Code Structure:\n\n• src/app/init.tsx - DApp initialization logic\n• src/app/components/DAppExport.tsx - Global export component\n• scripts/prepare-bundle.js - Bundle preparation script\n• manifest.json - DApp configuration\n\nExplore the code to learn how everything works together.');
     });
 
     // Assemble the UI
@@ -238,9 +260,10 @@ export function showDetails() {
     contentWrapper.appendChild(subtitle);
     contentWrapper.appendChild(description);
     contentWrapper.appendChild(featuresContainer);
-    contentWrapper.appendChild(statusContainer);
-    buttonContainer.appendChild(learnMoreButton);
-    buttonContainer.appendChild(notifyButton);
+    contentWrapper.appendChild(technicalContainer);
+    contentWrapper.appendChild(workflowContainer);
+    buttonContainer.appendChild(docsButton);
+    buttonContainer.appendChild(githubButton);
     contentWrapper.appendChild(buttonContainer);
     container.appendChild(contentWrapper);
 
@@ -301,7 +324,7 @@ export function showDetails() {
     // Store cleanup function for potential external access
     overlay._cleanup = cleanup;
 
-    console.log('Encrypted Files DApp details loaded successfully!');
+    console.log('Signet Bundled DApp details loaded successfully!');
 }
 
 export default { showDetails };
