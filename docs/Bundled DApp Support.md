@@ -58,25 +58,54 @@ To use a bundled DApp, you need to configure your DApp manifest with the followi
 
 ### 1. Bundle Your React Application
 
-Use a bundler like Webpack, Rollup, or Parcel to create a bundle of your React application. Configure your bundler to:
+Use a bundler like Turbopack (recommended), Webpack, Rollup, or Parcel to create a bundle of your React application. Configure your bundler to:
 
 - Create a single main bundle file (e.g., `index.bundle.js`)
 - Expose your DApp via a global variable
 
-Example Webpack configuration:
+Example Turbopack configuration with Next.js:
+
+```typescript
+// next.config.ts
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  output: 'standalone',
+  turbopack: {
+    // Enable Turbopack for all builds
+    resolveAlias: {
+      // Ensure the app is exposed globally for DApp integration
+      'app-global': './src/app/global.ts',
+    },
+  },
+};
+
+export default nextConfig;
+```
+
+You can then use a custom script to extract the bundled output from Next.js build:
 
 ```javascript
-// webpack.config.js
-module.exports = {
-  entry: './src/index.js',
-  output: {
-    filename: 'index.bundle.js',
-    path: path.resolve(__dirname, 'dist'),
-    library: 'MyBundledDApp',
-    libraryTarget: 'window'
-  },
-  // ... other configuration
-};
+// prepare-bundle.js
+function prepareJSBundle() {
+  // Find the DAppExport module in the build output
+  const dappExportPath = findDAppExportModule();
+  
+  // Read the DAppExport module
+  let jsContent = fs.readFileSync(dappExportPath, 'utf8');
+  
+  // Ensure the global object is properly exposed
+  const exposureCode = `
+    if (typeof window !== 'undefined') {
+      window.MyBundledDApp = { init };
+    }
+  `;
+  
+  jsContent += exposureCode;
+  
+  // Write to output file
+  fs.writeFileSync(outputPath, jsContent);
+}
 ```
 
 ### 2. Implement the Required Interface
@@ -118,15 +147,54 @@ Create a manifest.json file as shown in the example above, making sure to set `b
 
 Deploy your bundled DApp to a web server, ensuring all files are accessible at the paths specified in your manifest.
 
+## CSS Styling and Shadow DOM
+
+When running in Signet, CSS styling for bundled DApps is contained within a Shadow DOM to ensure style isolation. This prevents CSS from one DApp affecting other DApps or the Signet UI itself.
+
+### How Shadow DOM Works in Signet
+
+1. When a DApp is loaded, Signet creates a Shadow DOM for the DApp container
+2. All CSS dependencies are loaded within this Shadow DOM
+3. The DApp's components are rendered inside the Shadow DOM
+4. Styles defined in the DApp's CSS files only apply within the Shadow DOM boundary
+
+### Benefits of Shadow DOM
+
+- **Style Isolation**: CSS from one DApp cannot affect other DApps
+- **Encapsulation**: DApp styles are encapsulated and protected from external styles
+- **Conflict Prevention**: Prevents class name collisions between DApps
+- **Consistent Styling**: Ensures DApps look the same regardless of where they're loaded
+
+### CSS Considerations
+
+When developing a bundled DApp for Signet, keep these considerations in mind:
+
+- CSS selectors only work within the Shadow DOM boundary
+- External stylesheets are loaded within the Shadow DOM
+- Global styles from the main Signet application do not affect the DApp
+- Use relative units (em, rem, %) for better adaptability
+
 ## Loading Order
 
 When loading a bundled DApp, Signet follows this sequence:
 
-1. Load all CSS dependencies in parallel
-2. Load script dependencies sequentially (in the order specified)
-3. Load the main entry point script
-4. Access the global variable to get the DApp module
-5. Call the `init` function with the container element and secure interface
+1. Create a Shadow DOM for the DApp container
+2. Load all CSS dependencies in parallel within the Shadow DOM
+3. Load script dependencies sequentially (in the order specified)
+4. Load the main entry point script
+5. Access the global variable to get the DApp module
+6. Call the `init` function with the container element and secure interface
+
+## Enhanced Bundling Capabilities
+
+Signet now supports improved bundling capabilities for DApps:
+
+1. **Turbopack Integration**: Faster builds and more efficient bundling compared to Webpack
+2. **Automatic CSS Extraction**: CSS is automatically extracted and loaded separately
+3. **Dependency Management**: External dependencies can be loaded from CDNs or bundled
+4. **Tree Shaking**: Unused code is eliminated for smaller bundle sizes
+5. **Code Splitting**: Large applications can be split into smaller chunks
+6. **TypeScript Support**: Native support for TypeScript without additional configuration
 
 ## Cleanup
 
@@ -134,7 +202,8 @@ When a bundled DApp is closed, Signet:
 
 1. Calls any cleanup function returned by the `init` function
 2. Removes all loaded scripts and stylesheets from the DOM
-3. Destroys the security context
+3. Destroys the Shadow DOM container
+4. Destroys the security context
 
 ## Example: Minimal React DApp
 

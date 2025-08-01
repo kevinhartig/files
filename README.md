@@ -34,6 +34,8 @@ For more information on using this app as a bundled DApp, see [BUNDLED_DAPP_GUID
 
 - **Signet Integration**: The app includes an `init` function that accepts a container and securityInterface object
 - **Turbopack Integration**: Next.js with Turbopack for fast builds and bundling
+- **Shadow DOM for CSS**: CSS styling is contained within a Shadow DOM for style isolation
+- **Enhanced Bundling**: Automatic CSS extraction, tree shaking, code splitting, and TypeScript support
 - **Manifest Configuration**: Properly configured manifest.json for Signet integration
 
 ## Learn More
