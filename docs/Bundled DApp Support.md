@@ -145,7 +145,7 @@ Create a manifest.json file as shown in the example above, making sure to set `b
 
 ### 4. Deploy Your DApp
 
-Deploy your bundled DApp to a web server, ensuring all files are accessible at the paths specified in your manifest.
+Deploy your bundled DApp to the [Signet Marketplace](https://github.com/kevinhartig/marketplace-app/blob/main/README.md), ensuring all files are accessible at the paths specified in your manifest.
 
 ## CSS Styling and Shadow DOM
 
