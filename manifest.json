@@ -1,0 +1,31 @@
+{
+  "dappId": "eef7c5a4-9131-5e5c-8c29-9e175514785d",
+  "version": "1.0.0",
+  "manifestUrl": "/dapps/bundled-files/manifest.json",
+  "entryPoint": "dist/index.bundle.js",
+  "bundled": true,
+  "globalExport": "FilesApp",
+  "dependencies": {
+    "css": [
+      "dist/index.css"
+    ],
+    "scripts": []
+  },
+  "permissions": [
+    "profile:read"
+  ],
+  "category": "utilities",
+  "publisher": {
+    "name": "FISE Team",
+    "verified": true,
+    "website": "https://fisetech.ai"
+  },
+  "name": "Bundled Files",
+  "description": "A simple Next.js React app transpiled with Turbopack and bundled as a Signet DApp",
+  "icon": "public/icon.png",
+  "screenshots": [],
+  "details": {
+    "type": "file",
+    "content": "details.js"
+  }
+}

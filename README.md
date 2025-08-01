@@ -1,8 +1,10 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app) that has been configured to work as a bundled DApp for Signet.
 
 ## Getting Started
 
-First, run the development server:
+### Development Mode
+
+To run the app in development mode:
 
 ```bash
 npm run dev
@@ -16,9 +18,23 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Bundled DApp Mode
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To build the app as a bundled DApp for Signet:
+
+```bash
+npm run bundle
+```
+
+This will create a bundled version in the `dist` directory that can be loaded by Signet.
+
+For more information on using this app as a bundled DApp, see [BUNDLED_DAPP_GUIDE.md](./BUNDLED_DAPP_GUIDE.md).
+
+## Key Features
+
+- **Signet Integration**: The app includes an `init` function that accepts a container and securityInterface object
+- **Turbopack Integration**: Next.js with Turbopack for fast builds and bundling
+- **Manifest Configuration**: Properly configured manifest.json for Signet integration
 
 ## Learn More
 
@@ -27,10 +43,7 @@ To learn more about Next.js, take a look at the following resources:
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+To learn more about Signet DApp integration:
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Bundled DApp Support](./docs/Bundled%20DApp%20Support.md) - learn about bundled DApp support in Signet
+- [Signet DApp Security Interface](./docs/Signet%20DApp%20Security%20Interface.md) - learn about the security interface
