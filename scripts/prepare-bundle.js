@@ -25,7 +25,7 @@ function findDAppExportModule() {
         if (result) return result;
       } else if (file.name.endsWith('.js')) {
         const content = fs.readFileSync(fullPath, 'utf8');
-        if (content.includes('FilesApp') && content.includes('init')) {
+        if (content.includes('DApp') && content.includes('init')) {
           console.log(`Found potential DAppExport module at ${fullPath}`);
           return fullPath;
         }
@@ -94,17 +94,67 @@ function prepareJSBundle() {
   // Read the DAppExport module
   let jsContent = fs.readFileSync(dappExportPath, 'utf8');
   
-  // Ensure the global FilesApp object is properly exposed
-  const exposureCode = `
-// Simple direct export of the init function
-// This ensures the init function is always available globally
-if (typeof window !== 'undefined') {
-  // Create FilesApp object if it doesn't exist
-  window.FilesApp = window.FilesApp || {};
+  // Create the bundle in the correct order to ensure the DApp.init function is available
+  // even if there are errors later in the script
   
-  // Define a simple init function that directly renders the app
-  if (!window.FilesApp.init) {
-    window.FilesApp.init = function(container, securityInterface) {
+  // 1. Start with the pre-definition script that defines the global DApp variable and polyfills
+  const preDefinitionScript = `
+// IMPORTANT: Define the DApp global variable at the very beginning of the bundle
+// This must be at the global scope, not inside any function or conditional
+window.DApp = {};
+console.log("Initializing DApp module - global variable defined:", !!window.DApp);
+
+// Add browser-compatible polyfills for require and module
+// This prevents "require is not defined" and "module is not defined" errors
+if (typeof require === 'undefined') {
+  window.require = function(module) {
+    console.warn('Module import attempted via require(): ' + module);
+    
+    // Special handling for webpack runtime
+    if (module.includes('webpack-runtime')) {
+      // Mock webpack runtime functions
+      return {
+        // Mock the C function that's causing the error
+        C: function() {
+          console.log('Mock webpack runtime C function called');
+          return function() {}; // Return a no-op function
+        },
+        // Add other webpack runtime functions as needed
+        v: function() { return {}; },
+        m: function() { return {}; },
+        p: function() { return {}; },
+        R: function() { return {}; },
+        F: function() { return {}; },
+        I: function() { return {}; },
+        E: function() { return {}; }
+      };
+    }
+    
+    // For other modules, return an empty object
+    return {};
+  };
+  console.log("Added require polyfill for browser compatibility");
+}
+
+// Define the module object to prevent "module is not defined" errors
+// This must be defined before any module.exports statements
+if (typeof module === 'undefined') {
+  window.module = { exports: {} };
+  console.log("Added module polyfill to prevent 'module is not defined' errors");
+}
+
+// EARLY VERIFICATION: Verify that the DApp global variable exists
+console.log("DApp global variable exists (pre-init):", !!window.DApp);
+`;
+
+  // 2. Define the init function and immediately attach it to the global DApp object
+  // This ensures it's available even if there are errors later in the script
+  const initFunctionCode = `
+// IMPORTANT: Define and attach the init function to the global DApp object
+// This is done early to ensure it's available even if there are errors later in the script
+
+// Define the init function
+function init(container, securityInterface) {
       // Create a root element
       const root = document.createElement('div');
       container.appendChild(root);
@@ -125,7 +175,7 @@ if (typeof window !== 'undefined') {
       // Create a simple app component
       function App() {
         return React.createElement('div', null, [
-          React.createElement('h1', null, 'Files App'),
+          React.createElement('h1', null, 'React App'),
           React.createElement('p', null, 'A simple Next.js React app with Turbopack'),
           securityInterface && React.createElement('div', null, [
             React.createElement('h2', null, 'Security Interface Connected'),
@@ -186,16 +236,41 @@ if (typeof window !== 'undefined') {
       
       // Return cleanup function
       return cleanup;
-    };
-  }
 }
+
+// DIRECT ASSIGNMENT: Immediately attach the init function to the global DApp object
+// This is done before any potentially failing code to ensure it's always available
+window.DApp.init = init;
+
+// VERIFICATION: Add extensive debugging to help diagnose issues
+console.log("DApp global variable exists (post-init):", !!window.DApp);
+console.log("DApp.init function exists:", !!window.DApp.init);
+console.log("DApp.init function type:", typeof window.DApp.init);
+console.log("DApp properties:", Object.keys(window.DApp));
+console.log("DApp.init is enumerable:", Object.getOwnPropertyDescriptor(window.DApp, 'init')?.enumerable);
+`;
+
+  // 3. Add a final verification script that will run after all other code
+  const finalVerificationCode = `
+
+// FINAL VERIFICATION: Verify that the DApp global variable and init function still exist
+// This will run after all other code, including any potentially failing code
+console.log("FINAL CHECK: DApp global variable exists:", !!window.DApp);
+console.log("FINAL CHECK: DApp.init function exists:", !!window.DApp.init);
+console.log("FINAL CHECK: DApp.init function type:", typeof window.DApp.init);
+console.log("FINAL CHECK: DApp properties:", Object.keys(window.DApp));
 `;
   
-  jsContent += exposureCode;
+  // Combine all parts of the bundle in the correct order:
+  // 1. Pre-definition script (DApp global variable, polyfills)
+  // 2. Init function definition and immediate attachment to DApp
+  // 3. Original Next.js build output (which might contain errors)
+  // 4. Final verification
+  const finalBundle = preDefinitionScript + initFunctionCode + jsContent + finalVerificationCode;
   
   // Write to output file
-  fs.writeFileSync(jsOutputPath, jsContent);
-  console.log(`JS bundle prepared at ${jsOutputPath}`);
+  fs.writeFileSync(jsOutputPath, finalBundle);
+  console.log(`JS bundle prepared at ${jsOutputPath} with enhanced error handling`);
 }
 
 // Main function

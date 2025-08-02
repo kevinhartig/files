@@ -1,5 +1,5 @@
 export function showDetails() {
-    console.log('Files DApp Details showing...');
+    console.log('React DApp Details showing...');
 
     // Create a modal overlay
     const overlay = document.createElement('div');
@@ -180,7 +180,7 @@ export function showDetails() {
         <ol style="margin: 0; padding-left: 1.5rem; font-size: clamp(0.75rem, 2vw, 0.875rem); color: #4b5563; line-height: 1.6; text-align: left;">
             <li>Signet loads the DApp using the manifest.json configuration</li>
             <li>CSS and JavaScript bundles are loaded in the correct order</li>
-            <li>The global FilesApp object is accessed to get the init function</li>
+            <li>The global DApp object is accessed to get the init function</li>
             <li>The init function is called with a container and security interface</li>
             <li>React renders the application in the provided container</li>
         </ol>

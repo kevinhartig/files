@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "bundle": "next build && node scripts/prepare-bundle.js",
-    "bundle:dev": "next build --debug && node scripts/prepare-bundle.js"
+    "bundle": "next build --turbopack && node scripts/prepare-bundle.js",
+    "bundle:dev": "next build --turbopack --debug && node scripts/prepare-bundle.js"
   },
   "dependencies": {
     "react": "19.1.0",

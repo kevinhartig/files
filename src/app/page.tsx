@@ -5,7 +5,7 @@ import DAppExport from './components/DAppExport';
 export default function Home() {
   return (
     <div>
-      <h1>Files App</h1>
+      <h1>React App</h1>
       <p>A simple Next.js React app with Turbopack</p>
       <p>Note: Security Interface is only available when loaded as a Signet DApp</p>
       {/* Include DAppExport to ensure it's bundled */}

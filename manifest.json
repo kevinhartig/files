@@ -4,7 +4,7 @@
   "manifestUrl": "/dapps/bundled-files/manifest.json",
   "entryPoint": "dist/index.bundle.js",
   "bundled": true,
-  "globalExport": "FilesApp",
+  "globalExport": "DApp",
   "dependencies": {
     "css": [
       "dist/index.css"
@@ -23,7 +23,7 @@
     "verified": true,
     "website": "https://fisetech.ai"
   },
-  "name": "Bundled Files",
+  "name": "Bundled React App",
   "description": "A simple Next.js React app transpiled with Turbopack and bundled as a Signet DApp",
   "icon": "public/icon.png",
   "screenshots": [],

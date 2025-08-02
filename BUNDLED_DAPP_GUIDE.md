@@ -1,10 +1,10 @@
-# Files App - Bundled DApp Guide
+# React App - Bundled DApp Guide
 
-This document explains how to build, configure, and use the Files App as a bundled DApp in Signet.
+This document explains how to build, configure, and use the React App as a bundled DApp in Signet.
 
 ## Overview
 
-The Files App has been configured to work as a bundled DApp in Signet. This means it can be loaded remotely by Signet and will have access to the Signet security interface.
+The React App has been configured to work as a bundled DApp in Signet. This means it can be loaded remotely by Signet and will have access to the Signet security interface.
 
 ## Key Components
 
@@ -46,7 +46,7 @@ The transpilation process uses Next.js with Turbopack:
 
 1. **Next.js Build**: First, Next.js builds the application with Turbopack.
 2. **Custom Script**: A custom script extracts the relevant JavaScript and CSS from the Next.js build output.
-3. **Global Export**: The script ensures the app is exposed as a global variable named `FilesApp`.
+3. **Global Export**: The script ensures the app is exposed as a global variable named `DApp`.
 
 The build process handles:
 - Transpiling TypeScript to JavaScript
@@ -65,7 +65,7 @@ The `manifest.json` file is configured with the following key properties:
   "version": "1.0.0",
   "entryPoint": "dist/index.bundle.js",
   "bundled": true,
-  "globalExport": "FilesApp",
+  "globalExport": "DApp",
   "dependencies": {
     "css": ["dist/index.css"],
     "scripts": []
@@ -76,7 +76,7 @@ The `manifest.json` file is configured with the following key properties:
 
 Important fields:
 - `bundled: true` - Indicates this is a bundled DApp
-- `globalExport: "FilesApp"` - The name of the global variable that exposes the DApp
+- `globalExport: "DApp"` - The name of the global variable that exposes the DApp
 - `entryPoint` - Path to the main JavaScript bundle
 - `dependencies.css` - CSS files to load
 - `permissions` - Required permissions for the DApp

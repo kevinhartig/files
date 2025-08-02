@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Files DApp",
+  title: "React DApp",
   description: "Generate React components for your Signet DApps",
 };
 

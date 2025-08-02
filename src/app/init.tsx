@@ -12,7 +12,7 @@ interface SecurityInterface {
 function App({ securityInterface }: { securityInterface: SecurityInterface | null }) {
   return (
     <div>
-      <h1>Files App</h1>
+      <h1>React App</h1>
       <p>A simple Next.js React app with Turbopack</p>
       {securityInterface && (
         <div>
