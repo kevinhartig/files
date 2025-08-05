@@ -1,19 +1,30 @@
 'use client';
 
+import { useEffect } from 'react';
 import { init } from '../init';
 
-// This component is used to ensure the init function is included in the client bundle
+// Extend the Window interface to include our init function
+declare global {
+  interface Window {
+    init: typeof init;
+  }
+}
+
+// This component ensures the init function is included in the client bundle
 export default function DAppExport() {
-  // This is a dummy component that doesn't render anything
-  // Its purpose is to ensure the init function is included in the client bundle
-  return null;
+    useEffect(() => {
+        // Ensure the init function is available on the client side
+        if (typeof window !== 'undefined') {
+            // Make the init function available globally for the bundling process
+            window.init = init;
+
+            console.log('DAppExport: Made init function available globally');
+            console.log('DAppExport: init function type:', typeof init);
+        }
+    }, []);
+
+    return null; // This component doesn't render anything
 }
 
-// Expose the module globally for bundled DApp mode
-if (typeof window !== 'undefined') {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (window as any).DApp = { init };
-}
-
-// Export the init function for direct imports
+// Export the init function for direct imports and bundling
 export { init };

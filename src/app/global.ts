@@ -1,10 +1,29 @@
+'use client';
+
 import { init } from './init';
 
-// Expose the module globally for bundled DApp mode
-if (typeof window !== 'undefined') {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (window as any).DApp = { init };
+// Extend the Window interface to include our DApp properties
+declare global {
+  interface Window {
+    init: typeof init;
+    DApp: {
+      init: typeof init;
+    };
+  }
 }
 
-const exports = { init };
-export default exports;
+// Make the init function available for bundling
+if (typeof window !== 'undefined') {
+  window.init = init;
+
+  // Also set up the DApp object structure
+  if (!window.DApp) {
+    window.DApp = {} as { init: typeof init };
+  }
+  window.DApp.init = init;
+}
+
+// Export for module systems
+const globalExports = { init };
+export { init };
+export default globalExports;
