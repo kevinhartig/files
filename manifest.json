@@ -1,7 +1,7 @@
 {
   "dappId": "00b6c8a0-a9b3-5208-8d87-47ead8652e44",
   "version": "1.0.0",
-  "manifestUrl": "/dapps/bundled-files/manifest.json",
+  "manifestUrl": "/dapps/bundled-react/manifest.json",
   "entryPoint": "dist/index.bundle.js",
   "bundled": true,
   "globalExport": "DApp",
@@ -10,8 +10,8 @@
       "dist/index.css"
     ],
     "scripts": [
-      "https://unpkg.com/react@18/umd/react.production.min.js",
-      "https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+      "https://unpkg.com/react@19/umd/react.production.min.js",
+      "https://unpkg.com/react-dom@19/umd/react-dom.production.min.js"
     ]
   },
   "permissions": [
@@ -25,7 +25,7 @@
   },
   "name": "Bundled React App",
   "description": "A simple Next.js React app transpiled with Turbopack and bundled as a Signet DApp",
-  "icon": "public/icon.png",
+  "icon": "/dapps/bundled-react/public/icon.png",
   "screenshots": [],
   "details": {
     "type": "file",

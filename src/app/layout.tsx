@@ -1,4 +1,5 @@
 import './global';
+import './components/DAppExport'; // Ensure DAppExport is included in bundle
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
